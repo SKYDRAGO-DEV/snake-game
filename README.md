@@ -1,92 +1,56 @@
 # 🐍 SKYDRAGO Snake Game
 
-> The legendary snake game — playable right in your browser. Built with HTML5 Canvas + Vanilla JavaScript.
+> Playable right in your browser. No dependencies, no install — just open and play.
 
 <p align="center">
+  <a href="https://skydrago-dev.github.io/snake-game" target="_blank">
+    <img src="https://img.shields.io/badge/PLAY%20NOW-7dcfff?style=for-the-badge&logo=gamepad&logoColor=0d0d1a" />
+  </a>
   <img src="https://img.shields.io/badge/HTML5-Canvas-1a1b26?style=for-the-badge&logo=html5&logoColor=63B3ED" />
-  <img src="https://img.shields.io/badge/JS-ES6+-1a1b26?style=for-the-badge&logo=javascript&logoColor=f0db4f" />
-  <img src="https://img.shields.io/badge/Theme-Tokyo%20Night-1a1b26?style=for-the-badge&logoColor=7dcfff" />
+  <img src="https://img.shields.io/badge/Pure-JS-1a1b26?style=for-the-badge&logo=javascript&logoColor=f0db4f" />
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Press-START-63B3ED?style=for-the-badge&logo=gamepad&logoColor=white" />
-  <img src="https://img.shields.io/badge/Score-MAX-bb9af7?style=for-the-badge&logo=star&logoColor=white" />
-</p>
+## Features
 
-## 🎮 Play Now
+| Feature | Description |
+|---------|-------------|
+| **3 Themes** | Tokyo Night (default), Cyberpunk, Retro |
+| **Sound Effects** | Toggle SFX on/off |
+| **Top Scores** | Local leaderboard — top 5 scores saved |
+| **10 Levels** | Speed increases every 50 points |
+| **Particle FX** | Burst effect when eating food |
+| **Snake Trails** | Glowing motion trail |
+| **Mobile Ready** | Touch D-pad controls |
+| **Keyboard** | Arrow keys or WASD |
 
-**Open `index.html` in any modern browser** — no server needed!
+## How to Play
 
-Or play online at: [SKYDRAGO-DEV.github.io/snake-game](https://SKYDRAGO-DEV.github.io/snake-game)
+1. Open `index.html` in any browser — [or play online](https://skydrago-dev.github.io/snake-game)
+2. Press **START** or **SPACE**
+3. Eat the glowing food to grow
+4. Every 50 points = level up = faster snake
+5. Don't hit walls or yourself
 
-## 🎯 Features
-
-- **HTML5 Canvas** — smooth 60fps rendering
-- **Tokyo Night theme** — beautiful dark neon aesthetic
-- **10 progressive levels** — speed increases as you score
-- **High score persistence** — saved to localStorage
-- **Mobile support** — touch controls on smaller screens
-- **Keyboard controls** — Arrow keys or WASD
-- **Pause/Resume** — press P to pause
-- **Glowing effects** — neon snake with trail lighting
-- **Responsive design** — works on desktop & mobile
-
-## 🕹️ Controls
+## Controls
 
 | Key | Action |
 |-----|--------|
-| `↑` `↓` `←` `→` | Move snake |
-| `W` `A` `S` `D` | Alternative movement |
-| `Space` | Start / Restart |
+| `↑↓←→` / `WASD` | Move |
+| `SPACE` | Start / Restart |
 | `P` | Pause / Resume |
 
-## 🏆 How to Play
+## Tech Stack
 
-1. Press **START GAME** or hit **SPACE**
-2. Use arrow keys to control the snake
-3. Eat the **pink food** to grow and score points
-4. Every **50 points** = level up (snake gets faster!)
-5. **Don't hit the walls or yourself!**
-6. Beat your **high score**!
-
-## 🎨 Screenshots
-
-```
-╔════════════════════════════════════════════════╗
-║  🐍 SKYDRAGO SNAKE 🐍                         ║
-║  SCORE: 120  HIGH: 150  LEVEL: 3              ║
-║  ╔══════════════════════════════════════════╗  ║
-║  ║ ▓▓▓▓▓▓▓                                  ║  ║
-║  ║ ░░░░░░▓                                  ║  ║
-║  ║ ░░░░░░░▓       ███                      ║  ║
-║  ║              ▓▓▓▓▓▓▓▓▓                   ║  ║
-║  ║ ░░░░         ▓▓▓▓▓▓▓▓                   ║  ║
-║  ╚══════════════════════════════════════════╝  ║
-╚════════════════════════════════════════════════╝
-```
-
-## 📁 Project Structure
-
-```
-snake-game/
-├── index.html   # The complete game (single file!)
-└── README.md    # This file
-```
-
-## 🔧 Tech Stack
-
-- HTML5 Canvas API
+- HTML5 Canvas
 - Vanilla JavaScript (ES6+)
-- CSS3 with custom properties
-- localStorage for persistence
-- No external dependencies!
+- Web Audio API (SFX)
+- localStorage (scores)
+- Zero dependencies
 
-## 📜 License
+## Contributing
 
-MIT © SKYDRAGO-DEV
+Open an issue or PR. All contributions welcome.
 
 ---
 
-<p align="center">
-  <i>// Built for legendary developers everywhere //</i>
-</p>
+MIT © SKYDRAGO-DEV
