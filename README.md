@@ -1,6 +1,8 @@
 # 🐍 SKYDRAGO Snake Game
 
-> Playable right in your browser. No dependencies, no install — just open and play.
+> **Portfolio status: Legacy / archive candidate.** This is a small browser-game experiment retained for historical reference. It is not part of the active FX / quantitative-trading portfolio and is not presented as flagship engineering work.
+
+Playable in a browser with no runtime dependencies or installation.
 
 <p align="center">
   <a href="https://skydrago-dev.github.io/snake-game" target="_blank">
@@ -49,7 +51,7 @@
 
 ## Contributing
 
-Open an issue or PR. All contributions welcome.
+This repository is retained as legacy work. New development should prioritize the active FX / quantitative-trading systems portfolio.
 
 ---
 
