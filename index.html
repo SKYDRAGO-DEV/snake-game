@@ -203,8 +203,8 @@
     const COLS = 24, ROWS = 20, CELL = 20;
     let snake, food, dir, nextDir, gameLoop, score, level, speed;
     let running = false, paused = false, gameOver = false;
-    let trail = []; // snake trail positions
-    let particles = []; // particle effects
+    let trail = [];
+    let particles = [];
     let animFrame = 0;
 
     // ===== HIGH SCORES =====
@@ -212,13 +212,17 @@
     document.getElementById('highScore').textContent = highScore;
 
     function getScores() {
-      try { return JSON.parse(localStorage.getItem('skydragoSnakeScores') || '[]'); }
-      catch(e) { return []; }
+      try {
+        const value = JSON.parse(localStorage.getItem('skydragoSnakeScores') || '[]');
+        return Array.isArray(value) ? value.filter(Number.isFinite) : [];
+      } catch(e) {
+        return [];
+      }
     }
     function saveScore(s) {
       let scores = getScores();
       scores.push(s); scores.sort((a,b) => b-a);
-      scores = scores.slice(0, 5); // top 5
+      scores = scores.slice(0, 5);
       localStorage.setItem('skydragoSnakeScores', JSON.stringify(scores));
       if (s > highScore) {
         highScore = s;
@@ -250,9 +254,22 @@
     }
 
     function spawnFood() {
-      do {
-        food = { x: Math.floor(Math.random()*COLS), y: Math.floor(Math.random()*ROWS) };
-      } while (snake.some(s => s.x===food.x && s.y===food.y));
+      const occupied = new Set(snake.map(segment => `${segment.x},${segment.y}`));
+      const available = [];
+
+      for (let y = 0; y < ROWS; y++) {
+        for (let x = 0; x < COLS; x++) {
+          if (!occupied.has(`${x},${y}`)) available.push({x, y});
+        }
+      }
+
+      if (available.length === 0) {
+        food = null;
+        return false;
+      }
+
+      food = available[Math.floor(Math.random() * available.length)];
+      return true;
     }
 
     // ===== PARTICLES =====
@@ -334,13 +351,15 @@
       ctx.beginPath(); ctx.arc(head.x*CELL+eyeOff[eyeIdx][2], head.y*CELL+eyeOff[eyeIdx][3], 3, 0, Math.PI*2); ctx.fill();
 
       // Food (pulsing)
-      const pulse = 1 + Math.sin(animFrame * 0.1) * 0.1;
-      ctx.shadowColor = t.foodGlow; ctx.shadowBlur = 18;
-      ctx.fillStyle = t.food;
-      ctx.beginPath();
-      ctx.arc(food.x*CELL+CELL/2, food.y*CELL+CELL/2, (CELL/2-2)*pulse, 0, Math.PI*2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      if (food) {
+        const pulse = 1 + Math.sin(animFrame * 0.1) * 0.1;
+        ctx.shadowColor = t.foodGlow; ctx.shadowBlur = 18;
+        ctx.fillStyle = t.food;
+        ctx.beginPath();
+        ctx.arc(food.x*CELL+CELL/2, food.y*CELL+CELL/2, (CELL/2-2)*pulse, 0, Math.PI*2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
 
       // Particles
       updateParticles();
@@ -378,9 +397,11 @@
       if (paused || gameOver) return;
       dir = nextDir;
       const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+      const willEat = Boolean(food && head.x === food.x && head.y === food.y);
+      const occupiedBody = willEat ? snake : snake.slice(0, -1);
 
       if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS ||
-          snake.some(s => s.x===head.x && s.y===head.y)) {
+          occupiedBody.some(segment => segment.x===head.x && segment.y===head.y)) {
         playDie(); saveScore(score); renderLeaderboard(); endGame(); return;
       }
 
@@ -390,9 +411,9 @@
 
       snake.unshift(head);
 
-      if (head.x === food.x && head.y === food.y) {
+      if (willEat) {
         score += 10 * level;
-        trail = []; // clear trail on eat
+        trail = [];
         document.getElementById('score').textContent = score;
         spawnParticles(food.x, food.y);
         playEat();
@@ -402,7 +423,12 @@
           clearInterval(gameLoop); gameLoop = setInterval(tick, speed);
           playLevel();
         }
-        spawnFood();
+        if (!spawnFood()) {
+          saveScore(score);
+          renderLeaderboard();
+          endGame();
+          return;
+        }
       } else {
         snake.pop();
       }
@@ -438,13 +464,12 @@
           if (dir.x !== -1) nextDir = {x:1,y:0}; e.preventDefault(); break;
         case ' ':
           if (!running) startGame();
-          else if (gameOver) resetGame();
           e.preventDefault(); break;
         case 'p': case 'P': togglePause(); break;
       }
     });
 
-    document.getElementById('startBtn').addEventListener('click', () => { if (!running) startGame(); else if (gameOver) resetGame(); });
+    document.getElementById('startBtn').addEventListener('click', () => { if (!running) startGame(); });
     document.getElementById('pauseBtn').addEventListener('click', () => { if (running) togglePause(); });
     document.getElementById('resetBtn').addEventListener('click', resetGame);
 
