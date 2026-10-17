@@ -55,4 +55,4 @@ This repository is retained as legacy work. New development should prioritize th
 
 ---
 
-MIT © SKYDRAGO-DEV
+Copyright © SKYDRAGO-DEV. No repository LICENSE file is currently provided; public visibility does not, by itself, grant reuse rights.
